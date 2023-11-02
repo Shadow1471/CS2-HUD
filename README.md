@@ -1,8 +1,16 @@
 # CS2-HUD
-CS2 HUD but in Garry's Mod.
+This HUD is inspired by the new Counter Strike 2 HUD.
 
-# CONFIG
-You have configuration file in : lua\autorun\cs2hud\shared\sh_config.lua
+# FEATURES
+- Money [Text]
+- Health [Bar + Text]
+- Armor [Bar + Text]
+- Ammo [Text]
+- Player Steam Avatar
+- Customizable (config file)
+
+# CONFIGURATION
+Configuration file available, if you wish to change colors, etc., go to: lua\autorun\cs2hud\shared\sh_config.lua
 
 # SUPPORT
-If you encounter any problems or bugs, please contact me.
+If you notice a bug or a problem, please contact me.
