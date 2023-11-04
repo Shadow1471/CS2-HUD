@@ -48,30 +48,31 @@ if not ply:Alive() then return end
 if not IsValid(ply:GetActiveWeapon()) then return end
 
 local jobcolor = team.GetColor(ply:Team())
-local money = ply:getDarkRPVar("money")
 local health = ply:Health()
 local armor = ply:Armor()
 local weapon = ply:GetActiveWeapon()
 local ammo1 = ply:GetActiveWeapon():Clip1()
 local ammo2 = ply:GetAmmoCount(ply:GetActiveWeapon():GetPrimaryAmmoType())
+local currentgamemode = engine.ActiveGamemode()
+local cs2_r, cs2_g, cs2_b = GetConVar( "color_of_the_cs2_hud_r" ):GetFloat(), GetConVar( "color_of_the_cs2_hud_g" ):GetFloat(), GetConVar( "color_of_the_cs2_hud_b" ):GetFloat()
 
   -- >CIRCLE --
   if (cs2hud.CircleJobColor == true) then
   surface.DrawCircle(919, sh - 60, 40, jobcolor)
   else
-	surface.DrawCircle(919, sh - 60, 40, cs2hud.ColorHUD)
+	surface.DrawCircle(919, sh - 60, 40, Color(cs2_r, cs2_g, cs2_b))
   end
 
   -- >LINE --
-	surface.SetDrawColor( cs2hud.ColorHUD )
+	surface.SetDrawColor( Color(cs2_r, cs2_g, cs2_b) )
 	surface.SetTexture( surface.GetTextureID( "gui/gradient" ) ) 
   surface.DrawTexturedRectRotated( sw - 1185, sh - 60, sw * 0.15, sw - 1919, 180 )
   surface.DrawTexturedRectRotated( sw - 815, sh - 60, sw * 0.15, sw - 1919, 0 )
 
   -- >HEALTH --
   draw.RoundedBox(0, 470, sh - 40, 100 * 0.6, 5.5, Color(255, 51, 51, 140))
-  draw.RoundedBox(0, 470, sh - 40, health * 0.6, 5.5, cs2hud.ColorHUD)
-	draw.SimpleText(health, "MyHudFont", 500, sh - 60, cs2hud.ColorHUD, 1, 1)
+  draw.RoundedBox(0, 470, sh - 40, health * 0.6, 5.5, Color(cs2_r, cs2_g, cs2_b))
+	draw.SimpleText(health, "MyHudFont", 500, sh - 60, Color(cs2_r, cs2_g, cs2_b), 1, 1)
 
 	if (health < 30) then
 	surface.SetDrawColor( 255,64,64,50 )
@@ -79,11 +80,14 @@ local ammo2 = ply:GetAmmoCount(ply:GetActiveWeapon():GetPrimaryAmmoType())
     end
   
   -- >MONEY --
-   draw.SimpleText("$"..money, "MyHudFont", 90, sh - 50, cs2hud.ColorHUD, 1, 1)
+  if currentgamemode == "darkrp" then
+  local money = ply:getDarkRPVar("money")
+  draw.SimpleText("$"..money, "MyHudFont", 90, sh - 50, Color(cs2_r, cs2_g, cs2_b), 1, 1)
+  end
 
 	-- >ARMOR --
 	if (armor > 0) then
-	draw.SimpleText(armor, "MyHudFont", 420, sh - 60, cs2hud.ColorHUD, 1, 1)
+	draw.SimpleText(armor, "MyHudFont", 420, sh - 60, Color(cs2_r, cs2_g, cs2_b), 1, 1)
 	draw.RoundedBox(0, 390, sh - 40, 60, 5.5, Color(160, 160, 160, 140))
 	draw.RoundedBox(0, 390, sh - 40, math.Clamp(60 * (armor / 100),0,60), 5.5, cs2hud.ColorArmorBar)
   end
@@ -93,8 +97,8 @@ local ammo2 = ply:GetAmmoCount(ply:GetActiveWeapon():GetPrimaryAmmoType())
   surface.SetMaterial(bulletmat)
   surface.SetDrawColor(255, 255, 255, 255)
   surface.DrawTexturedRectRotated(1370, sh - 70, 32, 32, -1)
-  draw.SimpleText(ammo1, "Ammo1", 1260, sh - 65, cs2hud.ColorHUD, 1, 1)
-	draw.SimpleText(" | "..ammo2, "Ammo2", 1310, sh - 62, cs2hud.ColorHUD, 1, 1)
+  draw.SimpleText(ammo1, "Ammo1", 1260, sh - 65, Color(cs2_r, cs2_g, cs2_b), 1, 1)
+	draw.SimpleText(" | "..ammo2, "Ammo2", 1310, sh - 62, Color(cs2_r, cs2_g, cs2_b), 1, 1)
   end
   
   -- >STEAM AVATAR --
