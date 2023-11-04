@@ -1,14 +1,11 @@
 ------------------ GENERAL CONFIGURATION -------------------------------
-
 -- COLOR --
 local white = Color( 255, 255, 255 )
 local red = Color( 255, 0, 0 )
 local blue = Color( 0, 26, 255 )
--- local custom = Color( 0, 26, 255 ) -- You can create custom color, just don't forgot to put "custom" for exemple in "cs2hud.ColorHUD"
 
 -- CONFIG --
-cs2hud.CircleJobColor = true -- False : ColorHUD, True : Color JOB (DarkRP)
-cs2hud.ColorHUD = white
+cs2hud.CircleJobColor = true -- False : ColorHUD, True : Color JOB
 cs2hud.ColorArmorBar = blue
 
 -- BLACKLIST WEAPONS (AMMO) --
