@@ -11,7 +11,7 @@ local Avatar = vgui.Create( "CircularAvatar", Avatar)
 surface.CreateFont( "MyHudFont", {
 	font = "Goodland SemiBold",
 	extended = false,
-	size = 46,
+	size = sw / 40,
 	weight = 700,
 	blursize = 0,
 	scanlines = 0,
@@ -29,14 +29,14 @@ surface.CreateFont( "MyHudFont", {
 surface.CreateFont( "Ammo1", {
 	font = "Goodland SemiBold",
 	extended = false,
-	size = 58,
+	size = sw / 30,
 	weight = 500,
 } )
 
 surface.CreateFont( "Ammo2", {
 	font = "Goodland SemiBold",
 	extended = false,
-	size = 34,
+	size = sw / 58,
 	weight = 500,
 } )
 
@@ -56,56 +56,78 @@ local ammo2 = ply:GetAmmoCount(ply:GetActiveWeapon():GetPrimaryAmmoType())
 local DARKRP = engine.ActiveGamemode() == "darkrp"
 local cs2_r, cs2_g, cs2_b = GetConVar( "color_of_the_cs2_hud_r" ):GetFloat(), GetConVar( "color_of_the_cs2_hud_g" ):GetFloat(), GetConVar( "color_of_the_cs2_hud_b" ):GetFloat()
 
-  -- >CIRCLE --
-  if (cs2hud.CircleJobColor == true) then
-  surface.DrawCircle(919, sh - 60, 40, jobcolor)
-  else
-	surface.DrawCircle(919, sh - 60, 40, Color(cs2_r, cs2_g, cs2_b))
-  end
+ -- >CIRCLE --
+local circleX = sw * 0.521
+local circleY = sh - (sh * 0.0630)
+local circleRadius = sh * 0.0379
 
-  -- >LINE --
-	surface.SetDrawColor( Color(cs2_r, cs2_g, cs2_b) )
-	surface.SetTexture( surface.GetTextureID( "gui/gradient" ) ) 
-  surface.DrawTexturedRectRotated( sw - 1185, sh - 60, sw * 0.15, sw - 1919, 180 )
-  surface.DrawTexturedRectRotated( sw - 815, sh - 60, sw * 0.15, sw - 1919, 0 )
+if (cs2hud.CircleJobColor == true) then
+    surface.DrawCircle(circleX, circleY, circleRadius, jobcolor)
+else
+    surface.DrawCircle(circleX, circleY, circleRadius, Color(cs2_r, cs2_g, cs2_b))
+end
 
-  -- >HEALTH --
-  draw.RoundedBox(0, 470, sh - 40, 100 * 0.6, 5.5, Color(255, 51, 51, 140))
-  draw.RoundedBox(0, 470, sh - 40, health * 0.6, 5.5, Color(cs2_r, cs2_g, cs2_b))
-	draw.SimpleText(health, "MyHudFont", 500, sh - 60, Color(cs2_r, cs2_g, cs2_b), 1, 1)
+-- >LINE --
+local lineLength = sw * 0.20
+local lineThickness = 2
+local lineY = sh - (sh * 0.06)
 
-	if (health < 30) then
-	surface.SetDrawColor( 255,64,64,50 )
-  surface.DrawTexturedRectRotated(500, sh - 62, 40, 50, 90)
-    end
-  
-  -- >MONEY --
-  if (DARKRP) then
-  local money = ply:getDarkRPVar("money")
-  draw.SimpleText("$"..money, "MyHudFont", 90, sh - 50, Color(cs2_r, cs2_g, cs2_b), 1, 1)
-  end
+surface.SetDrawColor(Color(cs2_r, cs2_g, cs2_b))
+surface.SetTexture(surface.GetTextureID("gui/gradient"))
+surface.DrawTexturedRectRotated(sw * 0.409, lineY, lineLength, lineThickness, 180)
+surface.DrawTexturedRectRotated(sw * 0.627, lineY, lineLength, lineThickness, 0)
 
-	-- >ARMOR --
-	if (armor > 0) then
-	draw.SimpleText(armor, "MyHudFont", 420, sh - 60, Color(cs2_r, cs2_g, cs2_b), 1, 1)
-	draw.RoundedBox(0, 390, sh - 40, 60, 5.5, Color(160, 160, 160, 140))
-	draw.RoundedBox(0, 390, sh - 40, math.Clamp(60 * (armor / 100),0,60), 5.5, cs2hud.ColorArmorBar)
-  end
+-- >HEALTH --
+local healthBarWidth = sw * 0.03
+local healthBarHeight = 5.5
+local healthBarX = sw * 0.240
+local healthBarY = sh - (sh * 0.04)
 
-  -- >AMMO --
-  if not (blacklist[ weapon:GetClass() ]) then 
-  surface.SetMaterial(bulletmat)
-  surface.SetDrawColor(255, 255, 255, 255)
-  surface.DrawTexturedRectRotated(1370, sh - 70, 32, 32, -1)
-  draw.SimpleText(ammo1, "Ammo1", 1260, sh - 65, Color(cs2_r, cs2_g, cs2_b), 1, 1)
-	draw.SimpleText(" | "..ammo2, "Ammo2", 1310, sh - 62, Color(cs2_r, cs2_g, cs2_b), 1, 1)
-  end
-  
-  -- >STEAM AVATAR --
-  if not (IsValid(Avatar)) then return end
-  Avatar:SetPos(sw - 1039, sh - 99)
-  Avatar:SetSize(77, 77	)
-  Avatar:SetPlayer( ply, 64 )
+draw.RoundedBox(0, healthBarX, healthBarY, healthBarWidth, healthBarHeight, Color(255, 51, 51, 140))
+draw.RoundedBox(0, healthBarX, healthBarY, math.Clamp(healthBarWidth * (health / 100), 0, healthBarWidth), healthBarHeight, Color(cs2_r, cs2_g, cs2_b))
+draw.SimpleText(health, "MyHudFont", healthBarX + healthBarWidth * 0.5, healthBarY - 20, Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+
+if (health < 30) then
+    surface.SetDrawColor(255, 64, 64, 50)
+    surface.DrawTexturedRectRotated(healthBarX + healthBarWidth * 0.5, healthBarY - 22, 40, 50, 90)
+end
+
+-- >MONEY --
+if (DARKRP) then
+    local money = ply:getDarkRPVar("money")
+    draw.SimpleText("$"..money, "MyHudFont", sw * 0.02, sh - (sh * 0.06), Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+end
+
+-- >ARMOR --
+if (armor > 0) then
+    local armorBarWidth = sw * 0.03
+    local armorBarHeight = 5.5
+    local armorBarX = sw * 0.20
+    local armorBarY = sh - (sh * 0.04)
+
+    draw.SimpleText(armor, "MyHudFont", armorBarX + armorBarWidth * 0.5, armorBarY - 20, Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.RoundedBox(0, armorBarX, armorBarY, armorBarWidth, armorBarHeight, Color(160, 160, 160, 140))
+    draw.RoundedBox(0, armorBarX, armorBarY, math.Clamp(armorBarWidth * (armor / 100), 0, armorBarWidth), armorBarHeight, cs2hud.ColorArmorBar)
+end
+
+-- >AMMO --
+if not (blacklist[weapon:GetClass()]) then
+    surface.SetMaterial(bulletmat)
+    surface.SetDrawColor(255, 255, 255, 255)
+    surface.DrawTexturedRectRotated(sw * 0.790, sh - (sh * 0.07), 32, 32, -1)
+    draw.SimpleText(ammo1, "Ammo1", sw * 0.746, sh - (sh * 0.067), Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+    draw.SimpleText(" | "..ammo2, "Ammo2", sw * 0.774, sh - (sh * 0.067), Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+end
+
+-- >STEAM AVATAR --
+if not (IsValid(Avatar)) then return end
+local avatarX = sw * 0.50
+local avatarY = sh - (sh * 0.10)
+
+Avatar:SetPos(avatarX, avatarY)
+Avatar:SetSize(sw / 24, sh / 13.8)
+Avatar:SetPlayer(ply, 64)
+
 
 end
 
