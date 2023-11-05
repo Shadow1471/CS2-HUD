@@ -44,8 +44,8 @@ function CS2HUD()
 
 local ply = LocalPlayer()
 
-if not ply:Alive() then return end
-if not IsValid(ply:GetActiveWeapon()) then return end
+if not (ply:Alive()) then return end
+if not (IsValid(ply:GetActiveWeapon())) then return end
 
 local jobcolor = team.GetColor(ply:Team())
 local health = ply:Health()
@@ -53,7 +53,7 @@ local armor = ply:Armor()
 local weapon = ply:GetActiveWeapon()
 local ammo1 = ply:GetActiveWeapon():Clip1()
 local ammo2 = ply:GetAmmoCount(ply:GetActiveWeapon():GetPrimaryAmmoType())
-local currentgamemode = engine.ActiveGamemode()
+local DARKRP = engine.ActiveGamemode() == "darkrp"
 local cs2_r, cs2_g, cs2_b = GetConVar( "color_of_the_cs2_hud_r" ):GetFloat(), GetConVar( "color_of_the_cs2_hud_g" ):GetFloat(), GetConVar( "color_of_the_cs2_hud_b" ):GetFloat()
 
   -- >CIRCLE --
@@ -80,7 +80,7 @@ local cs2_r, cs2_g, cs2_b = GetConVar( "color_of_the_cs2_hud_r" ):GetFloat(), Ge
     end
   
   -- >MONEY --
-  if currentgamemode == "darkrp" then
+  if (DARKRP) then
   local money = ply:getDarkRPVar("money")
   draw.SimpleText("$"..money, "MyHudFont", 90, sh - 50, Color(cs2_r, cs2_g, cs2_b), 1, 1)
   end
