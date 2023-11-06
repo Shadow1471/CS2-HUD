@@ -79,7 +79,7 @@ surface.DrawTexturedRectRotated(sw * 0.627, lineY, lineLength, lineThickness, 0)
 
 -- >HEALTH --
 local healthBarWidth = sw * 0.03
-local healthBarHeight = 5.5
+local healthBarHeight = sw * 0.003
 local healthBarX = sw * 0.240
 local healthBarY = sh - (sh * 0.04)
 
@@ -101,7 +101,7 @@ end
 -- >ARMOR --
 if (armor > 0) then
     local armorBarWidth = sw * 0.03
-    local armorBarHeight = 5.5
+    local armorBarHeight = sw * 0.003
     local armorBarX = sw * 0.20
     local armorBarY = sh - (sh * 0.04)
 
