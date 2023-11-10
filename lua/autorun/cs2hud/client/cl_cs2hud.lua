@@ -57,7 +57,7 @@ local DARKRP = engine.ActiveGamemode() == "darkrp"
 local cs2_r, cs2_g, cs2_b = GetConVar( "color_of_the_cs2_hud_r" ):GetFloat(), GetConVar( "color_of_the_cs2_hud_g" ):GetFloat(), GetConVar( "color_of_the_cs2_hud_b" ):GetFloat()
 
  -- >CIRCLE --
-local circleX = sw * 0.521
+local circleX = sw * 0.500
 local circleY = sh - (sh * 0.0630)
 local circleRadius = sh * 0.0379
 
@@ -70,26 +70,26 @@ end
 -- >LINE --
 local lineLength = sw * 0.20
 local lineThickness = 2
-local lineY = sh - (sh * 0.06)
+local lineY = sh - (sh * 0.063)
 
 surface.SetDrawColor(Color(cs2_r, cs2_g, cs2_b))
 surface.SetTexture(surface.GetTextureID("gui/gradient"))
-surface.DrawTexturedRectRotated(sw * 0.409, lineY, lineLength, lineThickness, 180)
-surface.DrawTexturedRectRotated(sw * 0.627, lineY, lineLength, lineThickness, 0)
+surface.DrawTexturedRectRotated(sw * 0.380, lineY, lineLength, lineThickness, 180)
+surface.DrawTexturedRectRotated(sw * 0.621, lineY, lineLength, lineThickness, 0)
 
 -- >HEALTH --
-local healthBarWidth = sw * 0.03
-local healthBarHeight = sw * 0.003
-local healthBarX = sw * 0.240
-local healthBarY = sh - (sh * 0.04)
+local healthBarWidth = ScrW() * 0.03
+local healthBarHeight = ScrW() * 0.003
+local healthBarX = ScrW() * 0.25
+local healthBarY = ScrH() - (ScrH() * 0.04)
 
 draw.RoundedBox(0, healthBarX, healthBarY, healthBarWidth, healthBarHeight, Color(255, 51, 51, 140))
 draw.RoundedBox(0, healthBarX, healthBarY, math.Clamp(healthBarWidth * (health / 100), 0, healthBarWidth), healthBarHeight, Color(cs2_r, cs2_g, cs2_b))
-draw.SimpleText(health, "MyHudFont", healthBarX + healthBarWidth * 0.5, healthBarY - 20, Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+draw.SimpleText(health, "MyHudFont", healthBarX + healthBarWidth * 0.5, healthBarY - ScrH() * 0.02, Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
-if (health < 30) then
+if health < 30 then
     surface.SetDrawColor(255, 64, 64, 50)
-    surface.DrawTexturedRectRotated(healthBarX + healthBarWidth * 0.5, healthBarY - 22, 40, 50, 90)
+    surface.DrawTexturedRectRotated(healthBarX + healthBarWidth * 0.5, healthBarY - ScrH() * 0.022, ScrW() * 0.03, ScrH() * 0.05, 90)
 end
 
 -- >MONEY --
@@ -99,13 +99,13 @@ if (DARKRP) then
 end
 
 -- >ARMOR --
-if (armor > 0) then
+if armor > 0 then
     local armorBarWidth = sw * 0.03
     local armorBarHeight = sw * 0.003
     local armorBarX = sw * 0.20
     local armorBarY = sh - (sh * 0.04)
 
-    draw.SimpleText(armor, "MyHudFont", armorBarX + armorBarWidth * 0.5, armorBarY - 20, Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+    draw.SimpleText(armor, "MyHudFont", armorBarX + armorBarWidth * 0.5, armorBarY - ScrH() * 0.02, Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     draw.RoundedBox(0, armorBarX, armorBarY, armorBarWidth, armorBarHeight, Color(160, 160, 160, 140))
     draw.RoundedBox(0, armorBarX, armorBarY, math.Clamp(armorBarWidth * (armor / 100), 0, armorBarWidth), armorBarHeight, cs2hud.ColorArmorBar)
 end
@@ -113,22 +113,26 @@ end
 -- >AMMO --
 if not (blacklist[weapon:GetClass()]) then
     surface.SetMaterial(bulletmat)
-    surface.SetDrawColor(255, 255, 255, 255)
+    surface.SetDrawColor(cs2_r, cs2_g, cs2_b)
     surface.DrawTexturedRectRotated(sw * 0.790, sh - (sh * 0.07), 32, 32, -1)
-    draw.SimpleText(ammo1, "Ammo1", sw * 0.746, sh - (sh * 0.067), Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
     draw.SimpleText(" | "..ammo2, "Ammo2", sw * 0.774, sh - (sh * 0.067), Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+
+    if ammo1 > 4 then 
+    draw.SimpleText(ammo1, "Ammo1", sw * 0.746, sh - (sh * 0.067), Color(cs2_r, cs2_g, cs2_b), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+	else
+	draw.SimpleText(ammo1, "Ammo1", sw * 0.746, sh - (sh * 0.067), Color(255, 0, 0), TEXT_ALIGN_RIGHT, TEXT_ALIGN_CENTER)
+	end
 end
 
 -- >STEAM AVATAR --
-if not (IsValid(Avatar)) then return end
-local avatarX = sw * 0.50
+if (IsValid(Avatar)) then
+local avatarX = sw * 0.4795
 local avatarY = sh - (sh * 0.10)
 
 Avatar:SetPos(avatarX, avatarY)
 Avatar:SetSize(sw / 24, sh / 13.8)
 Avatar:SetPlayer(ply, 64)
-
-
+end
 end
 
 hook.Add("HUDPaint", "CS2_HUD", CS2HUD)

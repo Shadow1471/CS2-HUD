@@ -42,6 +42,16 @@ function PANEL:SetPlayer(ply, size)
 end
 
 function PANEL:Paint(w, h)
+  
+  local ply = LocalPlayer()
+
+  if (ply:IsPlayer() and ply:Alive()) then
+
+  local weapon = ply:GetActiveWeapon()
+  if IsValid(weapon) and weapon:IsWeapon() and weapon:GetClass() == "gmod_camera" then return 
+
+  else
+    
   self:PushMask(function()
     local poly = {}
 
@@ -64,6 +74,8 @@ function PANEL:Paint(w, h)
   end)
     self.base:PaintManual()
   self:PopMask()
+  end
+end
 end
 
 vgui.Register("CircularAvatar", PANEL)
