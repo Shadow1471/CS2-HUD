@@ -11,11 +11,11 @@ This HUD is inspired by the new Counter Strike 2 HUD.
 
 # CHANGE LOGS
 Version 1.1 (Updated: 10/11/2023)
-- Avatar circle color can be changed in settings (Props Menu > Utility > CS2HUD > Color > Team Color)
-- Ammunition count turns red when 4 bullets remain
-- Improved HUD on screen resolutions
-- Fix lua error
-- Updated addon images
+- Avatar circle color can be changed in settings (Props Menu > Utility > CS2HUD > Color > Team Color).
+- Ammunition count turns red when 4 bullets remain.
+- Improved HUD on screen resolutions.
+- Fix lua error.
+- Updated addon images.
 - The lines and the player's steam avatar have been centered.
 - Bullet takes the color defined by the player.
 - Steam avatar is now hidden when player dies or takes camera.
