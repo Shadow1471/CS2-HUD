@@ -7,7 +7,7 @@ This HUD is inspired by the new Counter Strike 2 HUD.
 - Armor [Bar + Text]
 - Ammo [Text]
 - Player Steam Avatar
-- Fully Customizable In-Game (Props Menu > Utility > CS2HUD > Color)
+- Fully Customizable In-Game (Props Menu > Utilities > CS2HUD)
 
 # CHANGE LOGS
 Version 1.2 (Updated: 11/11/2023)
