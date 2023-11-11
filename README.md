@@ -13,13 +13,12 @@ This HUD is inspired by the new Counter Strike 2 HUD.
 Version 1.2 (Updated: 11/11/2023)
 * Settings" category added to Props Menu > Utilities > CS2HUD.
 * Automatic saving of player-defined settings
-* Added the ability to disable :
-> Health
-> Armor
-> Avatar and Lines
-> Ammo
-> Money
-In the Settings category
+* Added the ability to disable (In the Settings category) :
+-> Health
+-> Armor
+-> Avatar and Lines
+-> Ammo
+-> Money
 
 # SUPPORT
 If you notice a bug or a problem, please contact me.
