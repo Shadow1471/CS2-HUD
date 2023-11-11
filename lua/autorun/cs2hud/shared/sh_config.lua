@@ -5,7 +5,6 @@ local red = Color( 255, 0, 0 )
 local blue = Color( 0, 26, 255 )
 
 -- CONFIG --
-cs2hud.CircleJobColor = true -- False : ColorHUD, True : Color TEAM
 cs2hud.ColorArmorBar = blue
 
 -- BLACKLIST WEAPONS (AMMO) --

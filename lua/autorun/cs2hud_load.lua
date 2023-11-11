@@ -1,6 +1,6 @@
 cs2hud = cs2hud or {}
 
-print("CS2 HUD - 1.1 Loaded")
+print("CS2 HUD - 1.2 Loaded")
 
 -- Font
 resource.AddFile("resource/fonts/Goodland_SemiBold.ttf")

@@ -44,9 +44,9 @@ end
 function PANEL:Paint(w, h)
   
   local ply = LocalPlayer()
-
+  
   if (ply:IsPlayer() and ply:Alive()) then
-
+  if GetConVar( "cs2hud_DisableAvatarCircleLines" ):GetFloat() == 1 then return end
   local weapon = ply:GetActiveWeapon()
   if IsValid(weapon) and weapon:IsWeapon() and weapon:GetClass() == "gmod_camera" then return 
 
